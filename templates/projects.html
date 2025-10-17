@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Projects - Wenson Wang{% endblock %}
+
+{% block header_title %}Projects{% endblock %}
+
+{% block content %}
+<section class="project-list">
+  {% if projects and projects|length > 0 %}
+    <div class="list-group">
+      {% for p in projects %}
+      <article class="list-group-item mb-4 p-4 project">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-4 col-sm-12 text-center">
+            {% if p.ImageFileName %}
+              <img src="{{ url_for('static', filename='images/' ~ p.ImageFileName) }}" alt="{{ p.Title }}" class="img-fluid" style="max-height:320px; object-fit:cover; width:100%; border-radius:8px;" />
+            {% else %}
+              <img src="{{ url_for('static', filename='images/project1-placeholder.svg') }}" alt="placeholder" class="img-fluid" style="max-height:320px; object-fit:cover; width:100%; border-radius:8px;" />
+            {% endif %}
+          </div>
+          <div class="col-md-8 col-sm-12">
+            <h3 class="h4">{{ p.Title }}</h3>
+            <p class="mb-0">{{ p.Description }}</p>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No projects found.</p>
+  {% endif %}
+
+  <div class="mt-5 mb-5 text-center">
+    <a href="{{ url_for('project_form') }}" class="btn btn-primary btn-lg px-4 py-3">Add Project</a>
+  </div>
+</section>
+{% endblock %}
